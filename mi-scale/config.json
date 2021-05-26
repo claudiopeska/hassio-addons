@@ -1,10 +1,10 @@
 {
   "name": "Xiaomi Mi Scale",
-  "version": "0.2.4",
+  "version": "0.1.0",
   "slug": "xiaomi_mi_scale",
-  "description": "Read weight measurements from a Xiaomi bathroom scale via Bluetooth (BLE)",
-  "url": "https://github.com/lolouk44/xiaomi_mi_scale_ha_add_on",
-  "image": "lolouk44/xiaomi-mi-scale-ha-add-on",
+  "description": "Read weight measurements from a Xiaomi bathroom scale via Bluetooth (BLE). This aim to allow user to configure which sensors they want to expose. This Add-on was forked from lolouk44 repository",
+  "url": "https://github.com/claudiopeska/xiaomi_mi_scale_ha_add_on",
+  "image": "claudiopeska/xiaomi-mi-scale-ha-add-on",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "application",
   "boot": "auto",
@@ -24,6 +24,7 @@
     "TIME_INTERVAL": 30,
     "MQTT_DISCOVERY": true,
     "MQTT_DISCOVERY_PREFIX": "homeassistant",
+    "SENSORES": ["weight"],
 
     "USERS": [
         { 
@@ -73,6 +74,7 @@
     "TIME_INTERVAL": "int?",
     "MQTT_DISCOVERY": "bool?",
     "MQTT_DISCOVERY_PREFIX": "str?",
+    "SENSORS": ["str?"],
 
     "USERS": [
       { 

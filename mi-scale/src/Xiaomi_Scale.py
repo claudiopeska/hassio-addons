@@ -94,6 +94,11 @@ try:
         except:
             BLUEPY_PASSIVE_SCAN = False
             pass  
+        try:
+            SENSORS = data["SENSORS"]
+        except:
+            SENSORS = ["weight"]
+            pass
 
         USERS = []
         for user in data["USERS"]:    
@@ -117,17 +122,21 @@ OLD_MEASURE = ''
 
 def discovery():
     for MQTTUser in (USERS):
-        message = '{"name": "' + MQTTUser.NAME + ' Weight",'
-        message+= '"state_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","value_template": "{{ value_json.weight }}",'
-        message+= '"json_attributes_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","icon": "mdi:scale-bathroom"}'
-        publish.single(
-                        MQTT_DISCOVERY_PREFIX + '/sensor/' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/config',
-                        message,
-                        retain=True,
-                        hostname=MQTT_HOST,
-                        port=MQTT_PORT,
-                        auth={'username':MQTT_USERNAME, 'password':MQTT_PASSWORD}
-                    )
+        for sensor in (SENSORS):
+            message = '{"name": "' + MQTTUser.NAME + ' ' + sensor + '",'
+            message+= '"state_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","value_template": "{{ value_json.' + sensor + '}}",'
+            # only send json on weight topic
+            if sensor == 'weight'
+                message+= '"json_attributes_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight",'
+            message+= '"icon": "mdi:scale-bathroom"}'
+            publish.single(
+                            MQTT_DISCOVERY_PREFIX + '/sensor/' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/config',
+                            message,
+                            retain=True,
+                            hostname=MQTT_HOST,
+                            port=MQTT_PORT,
+                            auth={'username':MQTT_USERNAME, 'password':MQTT_PASSWORD}
+                        )
     sys.stdout.write(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - Discovery Completed...\n")
 
 def check_weight(user, weight):
