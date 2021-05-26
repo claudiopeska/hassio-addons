@@ -123,7 +123,7 @@ OLD_MEASURE = ''
 def discovery():
     for MQTTUser in (USERS):
         for sensor in (SENSORS):
-            message = '{"name": "' + MQTTUser.NAME + ' ' + sensor + '",'
+            message = '{"name": "' + MQTTUser.NAME + ' ' + sensor.capitalize() + '",'
             message+= '"state_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","value_template": "{{ value_json.' + sensor + '}}",'
             # only send json on weight topic
             if sensor == 'weight'
