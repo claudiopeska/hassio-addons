@@ -147,7 +147,7 @@ def discovery():
             if sensor == 'weight':
                 message+= '"json_attributes_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight",'
 
-            if sensor in UNITS_OF_MEASUREMENT):
+            if sensor in UNITS_OF_MEASUREMENT:
                 message+= '" unit_of_measurement": "' + UNITS_OF_MEASUREMENT[sensor] + '",'
 
             message+= '"icon": "mdi:scale-bathroom"}'
