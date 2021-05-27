@@ -119,15 +119,37 @@ except FileNotFoundError:
     raise
 
 OLD_MEASURE = ''
+UNITS_OF_MEASUREMENT = {
+    "weight": "kg",
+    "bmi": "kg/m2",
+    "basal_metabolism": "kcal",
+    "visceral_fat": "unit"
+    "lean_body_mass": "kg"
+    "body_fat": "%",
+    "water": "%",
+    "bone_mass": "kg",
+    "muscle_mass": "kg",
+    "protein": "%",
+    "metabolic_age": "age"
+}
+
 
 def discovery():
     for MQTTUser in (USERS):
         for sensor in (SENSORS):
-            message = '{"name": "' + MQTTUser.NAME + ' ' + sensor.capitalize() + '",'
+
+            sensorsplit = sensor.split('_')
+            sensorname = ''.join(st.capitalize() for st in sensorsplit)
+
+            message = '{"name": "' + MQTTUser.NAME + ' ' + sensorname + '",'
             message+= '"state_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","value_template": "{{ value_json.' + sensor + '}}",'
             # only send json on weight topic
             if sensor == 'weight':
                 message+= '"json_attributes_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight",'
+
+            if UNITS_OF_MEASUREMENT.has_key(sensor):
+                message+= '" unit_of_measurement": "' + UNITS_OF_MEASUREMENT[sensor] + '",'
+
             message+= '"icon": "mdi:scale-bathroom"}'
             publish.single(
                             MQTT_DISCOVERY_PREFIX + '/sensor/' + MQTT_PREFIX + '/' + MQTTUser.NAME + '_' + sensor + '/config',
