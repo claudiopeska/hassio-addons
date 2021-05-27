@@ -123,8 +123,8 @@ UNITS_OF_MEASUREMENT = {
     "weight": "kg",
     "bmi": "kg/m2",
     "basal_metabolism": "kcal",
-    "visceral_fat": "unit"
-    "lean_body_mass": "kg"
+    "visceral_fat": "unit",
+    "lean_body_mass": "kg",
     "body_fat": "%",
     "water": "%",
     "bone_mass": "kg",
