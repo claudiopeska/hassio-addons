@@ -24,7 +24,7 @@
     "TIME_INTERVAL": 30,
     "MQTT_DISCOVERY": true,
     "MQTT_DISCOVERY_PREFIX": "homeassistant",
-    "SENSORES": ["weight"],
+    "SENSORS": ["weight"],
 
     "USERS": [
         { 
