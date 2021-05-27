@@ -130,7 +130,7 @@ def discovery():
                 message+= '"json_attributes_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight",'
             message+= '"icon": "mdi:scale-bathroom"}'
             publish.single(
-                            MQTT_DISCOVERY_PREFIX + '/sensor/' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/config',
+                            MQTT_DISCOVERY_PREFIX + '/sensor/' + MQTT_PREFIX + '/' + MQTTUser.NAME + '_' + sensor + '/config',
                             message,
                             retain=True,
                             hostname=MQTT_HOST,
