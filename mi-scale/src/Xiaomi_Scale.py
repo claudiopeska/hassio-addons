@@ -139,7 +139,7 @@ def discovery():
         for sensor in (SENSORS):
 
             sensorsplit = sensor.split('_')
-            sensorname = ''.join(st.capitalize() for st in sensorsplit)
+            sensorname = ' '.join(st.capitalize() for st in sensorsplit)
 
             message = '{"name": "' + MQTTUser.NAME + ' ' + sensorname + '",'
             message+= '"state_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","value_template": "{{ value_json.' + sensor + '}}",'
@@ -148,7 +148,7 @@ def discovery():
                 message+= '"json_attributes_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight",'
 
             if sensor in UNITS_OF_MEASUREMENT:
-                message+= '" unit_of_measurement": "' + UNITS_OF_MEASUREMENT[sensor] + '",'
+                message+= '"unit_of_measurement": "' + UNITS_OF_MEASUREMENT[sensor] + '",'
 
             message+= '"icon": "mdi:scale-bathroom"}'
             publish.single(
