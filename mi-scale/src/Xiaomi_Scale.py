@@ -130,7 +130,7 @@ UNITS_OF_MEASUREMENT = {
     "bone_mass": "kg",
     "muscle_mass": "kg",
     "protein": "%",
-    "metabolic_age": "age"
+    "metabolic_age": "years"
 }
 
 
@@ -142,7 +142,7 @@ def discovery():
             sensorname = ' '.join(st.capitalize() for st in sensorsplit)
 
             message = '{"name": "' + MQTTUser.NAME + ' ' + sensorname + '",'
-            message+= '"state_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","value_template": "{{ value_json.' + sensor + '}}",'
+            message+= '"state_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight","value_template": "{{ value_json.' + sensor + ' }}",'
             # only send json on weight topic
             if sensor == 'weight':
                 message+= '"json_attributes_topic": "' + MQTT_PREFIX + '/' + MQTTUser.NAME + '/weight",'
