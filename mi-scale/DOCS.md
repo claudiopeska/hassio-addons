@@ -19,6 +19,15 @@ Name | Model | Picture
 5. Under the "Configuration" tab, change the settings appropriately (at least MQTT parameters, user properties, and MAC address), see [Parameters](#parameters).
 6. Start the Add-on.
 
+## Important:
+If using the Add-On outside of Home Assistant Operating System / through a docker container, make sure the dbus is shared with the container running Home Assistant. This is typically done by adding the following line in your docker run command:
+`-v /var/run/dbus/:/var/run/dbus/:ro`
+or the following lines in your docker-compose file:
+```
+    volumes:
+      - /var/run/dbus/:/var/run/dbus/:ro
+```
+
 ## Parameters
 Option | Type | Required | Description
 --- | --- | --- | ---
@@ -30,9 +39,9 @@ MQTT_HOST | string | Yes | MQTT server, defaults to `127.0.0.1`
 MQTT_USERNAME | string | No | Username for MQTT server (comment out if not required)
 MQTT_PASSWORD | string | No | Password for MQTT (comment out if not required)
 MQTT_PORT | int | No | Port of your MQTT server, defaults to 1883
-TIME_INTERVAL | int | No | Time in seconds between each query to the scale, to allow other applications to use the Bluetooth module, defaults to 30
 MQTT_DISCOVERY | bool | No | Whether you want MQTT discovery for Home Assistant, defaults to `true`
 MQTT_DISCOVERY_PREFIX | string | No | MQTT discovery prefix for Home Assistant, defaults to `homeassistant`
+DEBUG_LEVEL | string | No | Logging level. Possible values: 'CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG'. Defaults to 'INFO'
 USERS | List | Yes | List of users to add, see below
 
 
@@ -54,24 +63,30 @@ Note: the weight definitions must be in the same unit as the scale (kg, Lbs, or 
 
 
 # Home Assistant Setup
-Under the `sensor` block, enter as many blocks as users configured in your environment variables.
-(Note: only weight entities are automatically added via the MQTT discovery.)
+In the `mqtt:` block, enter as many blocks as users configured in your environment variables.
+If you already have an `mqtt:` and/or `sensor:` block, do not create another one but simply add the "missing" bits under the relevant block header.
+Note: Only weight entities are automatically added via the MQTT discovery.
+
 
 ```yaml
-  - platform: mqtt
-    name: "Example Name Weight"
-    state_topic: "miscale/USER_NAME/weight"
-    value_template: "{{ value_json['weight'] }}"
-    unit_of_measurement: "kg"
-    json_attributes_topic: "miscale/USER_NAME/weight"
-    icon: mdi:scale-bathroom
+mqtt:
+  sensor:
+    - name: "Example Name Weight"
+      state_topic: "miscale/USER_NAME/weight"
+      value_template: "{{ value_json['weight'] }}"
+      unit_of_measurement: "kg"
+      json_attributes_topic: "miscale/USER_NAME/weight"
+      icon: mdi:scale-bathroom
+      # Below lines only needed if long term statistics are required
+      state_class: "measurement"
 
-  - platform: mqtt
-    name: "Example Name BMI"
-    state_topic: "miscale/USER_NAME/weight"
-    value_template: "{{ value_json['bmi'] }}"
-    icon: mdi:human-pregnant
-    unit_of_measurement: "kg/m2"
+    - name: "Example Name BMI"
+      state_topic: "miscale/USER_NAME/weight"
+      value_template: "{{ value_json['bmi'] }}"
+      icon: mdi:human-pregnant
+      unit_of_measurement: "kg/m2"
+      # Below lines only needed if long term statistics are required
+     state_class: "measurement"
 ```
 
 <img align="center" alt="Example of the Lovelace card in HA" src="https://raw.githubusercontent.com/lolouk44/xiaomi_mi_scale/master/Screenshots/HA_Lovelace_Card.png" width="250"> 🠲 <img align="center" alt="Example of the details of the Lovelace card in HA" src="https://raw.githubusercontent.com/lolouk44/xiaomi_mi_scale/master/Screenshots/HA_Lovelace_Card_Details.png" width="250">
@@ -79,4 +94,4 @@ Under the `sensor` block, enter as many blocks as users configured in your envir
 
 
 # Acknowledgements
-Thanks to @syssi (https://gist.github.com/syssi/4108a54877406dc231d95514e538bde9) and @prototux (https://github.com/wiecosystem/Bluetooth) for their initial code. Special thanks to [@ned-kelly](https://github.com/ned-kelly) for his help turning a "simple" Python script into a fully fledged Docker container. Thanks to [@bpaulin](https://github.com/bpaulin), [@fabir-git](https://github.com/fabir-git), [@snozzley](https://github.com/snozzley), [CodeFinder2](https://github.com/CodeFinder2) for their PRs and collaboration.
+Thanks to @syssi (https://gist.github.com/syssi/4108a54877406dc231d95514e538bde9) and @prototux (https://github.com/wiecosystem/Bluetooth) for their initial code. Special thanks to [@ned-kelly](https://github.com/ned-kelly) for his help turning a "simple" Python script into a fully fledged Docker container. Thanks to [@bpaulin](https://github.com/bpaulin), [@fabir-git](https://github.com/fabir-git), [@snozzley](https://github.com/snozzley), [CodeFinder2](https://github.com/CodeFinder2) [@MariusHerget](https://github.com/MariusHerget) for their PRs and collaboration.

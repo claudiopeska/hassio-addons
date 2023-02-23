@@ -8,8 +8,10 @@
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "startup": "application",
   "boot": "auto",
+  "host_dbus": true,
   "panel_admin": false,
   "host_network": true,
+  "apparmor": true,
   "privileged": ["NET_ADMIN", "SYS_ADMIN"],
 
   "options": {
@@ -17,14 +19,17 @@
     "BLUEPY_PASSIVE_SCAN": false,
     "MISCALE_MAC": "00:00:00:00:00:00",
     "MQTT_PREFIX": "miscale",
-    "MQTT_HOST": "192.168.0.1",
+    "MQTT_HOST": "127.0.0.1",
     "MQTT_USERNAME": "user",
     "MQTT_PASSWORD": "passwd",
     "MQTT_PORT": 1883,
-    "TIME_INTERVAL": 30,
+    "MQTT_RETAIN": true,
     "MQTT_DISCOVERY": true,
     "MQTT_DISCOVERY_PREFIX": "homeassistant",
     "SENSORS": ["weight"],
+    "MQTT_TLS_CACERTS": "Path to CA Cert File",
+    "MQTT_TLS_INSECURE": false,
+    "DEBUG_LEVEL": "error",
 
     "USERS": [
         { 
@@ -71,9 +76,12 @@
     "MQTT_USERNAME": "str?",
     "MQTT_PASSWORD": "str?",
     "MQTT_PORT": "int?",
-    "TIME_INTERVAL": "int?",
+    "MQTT_RETAIN": "bool?",
     "MQTT_DISCOVERY": "bool?",
     "MQTT_DISCOVERY_PREFIX": "str?",
+    "MQTT_TLS_CACERTS": "str?",
+    "MQTT_TLS_INSECURE": "bool?",
+    "DEBUG_LEVEL": "str?",
     "SENSORS": ["str?"],
 
     "USERS": [

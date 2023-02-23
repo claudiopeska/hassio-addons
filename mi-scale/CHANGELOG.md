@@ -1,3 +1,51 @@
+## [0.3.6] - 2022-10-10
+### Added
+- Added apparmor Security to support Supervised Installation. (Fixes [67](https://github.com/lolouk44/hassio-addons/issues/67) - Thanks @MariusHerget)
+
+## [0.3.5] - 2022-10-10
+### Added
+- Added extra logging. Logging Level can be set from config file.
+- Deprecated options MISCALE_VERSION, TIME_INTERVAL.
+### Changed
+- Restored HCI settings handling
+
+## [0.3.4] - 2022-10-05
+### Changed
+- Restored MQTT Discovery. ([fixes #65](https://github.com/lolouk44/hassio-addons/issues/65))
+- Removed no longer needed MISCALE_VERSION
+
+## [0.3.3] - 2022-10-03
+### Changed
+- Restoring handling of V1 scales. ([fixes #64](https://github.com/lolouk44/hassio-addons/issues/64))
+
+## [0.3.2] - 2022-10-03
+### Changed
+- Fixed missing dbus option. ([fixes #63](https://github.com/lolouk44/hassio-addons/issues/63))
+
+## [0.3.1] - 2022-10-02
+### Changed
+- Fixed MQTT Config. ([fixes #55](https://github.com/lolouk44/xiaomi_mi_scale/issues/55))
+
+## [0.3.0] - 2022-10-02
+### Changed
+- Stopped using deprecated/no longer supported bluepy library and replaced with bleak, requiring major code overhaul. ([fixes #59](https://github.com/lolouk44/hassio-addons/issues/59))
+- Updated documentation to reflect MQTT integration (moved out of sensor config)
+### Breaking Changes
+- If using a MiScale V1, make sure you add the MISCALE_VERSION to your options.json file (see doc)
+
+## [0.2.8] - 2022-02-03
+### Changed
+- Changed time format for datestamp to contain timezone ([fixes #59](https://github.com/lolouk44/hassio-addons/issues/59))
+
+## [0.2.7] - 2022-01-13
+### Added
+- Added support for Long Term Statistics (HA 2021.9 minimum required)
+- Impedance posted to MQTT ([fixes #56](https://github.com/lolouk44/hassio-addons/issues/56))
+
+## [0.2.6] - 2021-06-28
+### Changed
+- Fixed handling of MQTT_PORT and TIME_INTERVAL
+
 ## [0.2.4] - 2021-05-10
 ### Fixed
 - Fixed user lookup by non kg weight (https://github.com/lolouk44/hassio-addons/issues/36)
