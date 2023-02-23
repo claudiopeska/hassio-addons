@@ -16,7 +16,7 @@ import os
 import Xiaomi_Scale_Body_Metrics
 
 DEFAULT_DEBUG_LEVEL = "INFO"
-VERSION = "0.1.8"
+VERSION = "0.3.7"
 
 
 
